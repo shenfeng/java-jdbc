@@ -1,0 +1,37 @@
+namespace java me.shenfeng
+
+
+struct Item {
+    i32 id
+    string name
+}
+
+// select
+func Item getItemById(i32 id) {
+    select * form item where id = :id
+}
+
+func list<Item> getItems(int limit, int offset) {
+    select * from item limit :limit, :offset
+}
+
+func list<Item> getItems(list<i32> ids) {
+    select * from item where id in (:ids) order by FIELD(id, :ids)
+}
+
+
+
+// return generated primary key
+func i32 saveItem(string name) {
+    insert into item (name) value (:name)
+}
+
+// update
+func void updateItem(i32 id, string newName) {
+    update item set name = :newName where id = :id
+}
+
+// delete
+func void deleteItemById(i32 id) {
+    delete from item where id = :id
+}
